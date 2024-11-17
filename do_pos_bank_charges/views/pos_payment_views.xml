@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="inherit_view_pos_payment_method_bank_charge" model="ir.ui.view">
+        <field name="name">pos.payment.method.inherit.bank.charge</field>
+        <field name="model">pos.payment.method</field>
+        <field name="inherit_id" ref="point_of_sale.pos_payment_method_view_form"/>
+        <field name="arch" type="xml">
+            <field name="company_id" position="after">
+                <field name="journal_type" invisible="1"/>
+                <field name="is_bank_charge" invisible="journal_type != 'bank'"/>
+            </field>
+            <group>
+                <group>
+                    <field name="cahrges_type" invisible="not is_bank_charge" required="is_bank_charge == True"/>
+                    <field name="cahrges_amount" invisible="not is_bank_charge" required="is_bank_charge == True"/>
+                </group>
+
+                <group>
+                    <field name="bank_charge_prod_id" invisible="not is_bank_charge" required="is_bank_charge == True"/>
+                </group>
+            </group>
+        </field>
+    </record>
+</odoo>

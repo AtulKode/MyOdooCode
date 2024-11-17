@@ -1,0 +1,10 @@
+/*:root {
+	--bs-primary-rgb: 1, 36, 58;
+}*/
+.o_sign_sign_item_navigator {
+	background-color: #01243a;
+}
+/*.o_sign_sign_item_navigator:after{
+	background-color: #01243a;
+	border-left: 25px solid rgb(var(--bs-primary-rgb));
+}*/

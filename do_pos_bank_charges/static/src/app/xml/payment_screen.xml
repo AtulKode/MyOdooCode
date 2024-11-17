@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="PaymentScreen" t-inherit="point_of_sale.PaymentScreenMethods" t-inherit-mode="extension" owl="1">
+        <xpath expr="//t[@t-foreach='payment_methods_from_config']" position="replace">
+
+                <t t-foreach="payment_methods_from_config" t-as="paymentMethod" t-key="paymentMethod.id">
+                    <div class="button paymentmethod btn btn-light rounded-0 border-bottom" t-on-click="() => this.addNewPaymentLine(paymentMethod)">
+                        <div class="payment-method-display d-flex align-items-center flex-grow-1">
+                            <div>
+                                <img class="payment-method-icon" t-att-src="paymentMethodImage(paymentMethod.id)" />
+                            </div>
+                            <t t-if="paymentMethod.is_bank_charge">
+                                <span class="payment-name" t-esc="paymentMethod.name"/>
+                                <span t-esc="paymentMethod.cahrges_amount"/> %
+                            </t>
+                            <t t-else="">
+                                <span class="payment-name" t-esc="paymentMethod.name"/>
+                            </t>
+                        </div>
+                    </div>
+                </t>
+        </xpath>
+    </t>
+
+
+    <t t-name="PaymentScreenStatus" t-inherit="point_of_sale.PaymentScreenStatus" t-inherit-mode="extension" owl="1">
+        <xpath expr="//div[hasclass('payment-status-total-due')]" position="after">
+                <div class="payment-status-total-due">
+                    <span class="label pe-2">Bank Charges: </span>
+                    <span>
+                        <t t-esc="totalBankCharge"/>
+                    </span>
+                </div>
+                <div>
+                     <span class="label pe-2">Total: </span>
+                    <span>
+                        <t t-esc="allTheTotal"/>
+                    </span>
+                </div>
+        </xpath>
+    </t>
+
+</templates>
