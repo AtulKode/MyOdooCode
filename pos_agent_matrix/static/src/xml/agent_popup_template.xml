@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="CustomAgentPopup" owl="1">
+            <Draggable>
+                <div class="popup popup-confirm">
+                    <header class="title drag-handle">
+                        <t t-esc="props.title" />
+                    </header>
+                    <main class="body">
+                    
+                        <input type="date" id="dateInput"/>
+                            <script>
+                                
+                                document.getElementById('dateInput').valueAsDate = new Date();
+                            </script>
+
+                        <div class="agent-detail">
+                            <span class="label">Agent</span>    
+                            <select id="agent-detail" class="detail" style="width:310px; height:30px; margin-top:20px; text-align:center;">
+                                <option value=''>None</option>
+                                <t t-foreach='env.pos.product_agent' t-as='ag' t-key="ag['id']">
+                                    <option t-att-value="ag['id']">
+                                        <t t-esc="ag['name']"/>
+                                    </option>
+                                </t>
+                            </select>
+                        </div>
+                        
+                    </main>
+
+                    <footer class="footer">
+                        <div class="button confirm" t-on-click="confirm">
+                            <t t-esc="props.confirmText" />
+                        </div>
+                        <div class="button cancel" t-on-click="cancel">
+                            <t t-esc="props.cancelText" />
+                        </div>
+                    </footer>
+                </div>
+
+
+            </Draggable>
+
+            
+    </t>
+
+</templates>
+
+  

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+  <data>
+    <record model="ir.ui.view" id="chatbot_chatbot_form_view">
+      <field name="name">chatbot.chatbot.form</field>
+      <field name="model">chatbot.chatbot</field>
+      <field name="arch" type="xml">
+        <form string="ChatBot">
+          <header>
+            <button name="action_activate_bot" type="object" class="btn btn-primary" string="Train Bot" />
+          </header>
+          <sheet>
+            <group>
+              <group>
+                <field name="name" required="1" />
+                <field name="title" />
+                <field name="not_found_msg" />
+              </group>
+              <group>
+                <field name="icon" />
+                <field name="chatbot_image" />
+                <field name="website_id" groups="website.group_multi_website" />
+              </group>
+            </group>
+            <notebook>
+              <page string="Tags" autofocus="autofocus">
+                <field name="chatbot_question_ids" mode="tree" context="{'default_chatbot_id': active_id}">
+                  <tree>
+                    <field name="tag" />
+                    <field name="question_ids" widget="many2many_tags" />
+                    <field name="answer" />
+                  </tree>
+                  <form string="Ques / Ans">
+                    <sheet>
+                      <group>
+                        <field name="tag" options="{'horizontal': true}" />
+                      </group>
+                      <field name="question_ids" widget="section_and_note_one2many" mode="tree">
+                        <tree string="question" editable="bottom">
+                          <field name="name" string="Questions" required="1" />
+                        </tree>
+                      </field>
+                      <group>
+                        <field name="answer" required="1" />
+                        <field name="related_tag_ids" widget="many2many_tags"/>
+                      </group>
+                    </sheet>
+                  </form>
+                </field>
+              </page>
+            </notebook>
+          </sheet>
+        </form>
+      </field>
+    </record>
+    <record model="ir.ui.view" id="chatbot_chatbot_tree_view">
+      <field name="name">chatbot.chatbot.tree</field>
+      <field name="model">chatbot.chatbot</field>
+      <field name="arch" type="xml">
+        <tree string="Chatbot Tree">
+          <field name="name" />
+        </tree>
+      </field>
+    </record>
+    <record model="ir.actions.act_window" id="chatbot_chatbot_action">
+      <field name="name">ChatBot</field>
+      <field name="res_model">chatbot.chatbot</field>
+      <field name="view_mode">tree,form</field>
+      <field name="view_id" ref="chatbot_chatbot_tree_view" />
+    </record>
+    <menuitem id="chatbot_chatbot_menu" name="ChatBot" web_icon="do_website_chatbot,static/src/description/icon.png" sequence="20" groups="base.group_system" />
+    <menuitem id="chatbot_chatbot_1" parent="chatbot_chatbot_menu" name="ChatBot" action="chatbot_chatbot_action" sequence="1" />
+  </data>
+</odoo>

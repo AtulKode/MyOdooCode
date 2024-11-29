@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+  <data>
+    <record model="ir.ui.view" id="chatbot_tag_form_view">
+      <field name="name">chatbot.tag.form</field>
+      <field name="model">chatbot.tag</field>
+      <field name="arch" type="xml">
+        <form string="Tag">
+          <sheet>
+            <group>
+              <field name="name" required="1" />
+              <field name="sequence"/>
+              <field name="is_show_chatbot" />
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+    <record model="ir.ui.view" id="chatbot_tag_tree_view">
+      <field name="name">chatbot.tag.tree</field>
+      <field name="model">chatbot.tag</field>
+      <field name="arch" type="xml">
+        <tree string="Tag">
+          <field name="name" />
+        </tree>
+      </field>
+    </record>
+    <record model="ir.actions.act_window" id="chatbot_tag_action">
+      <field name="name">Tag</field>
+      <field name="res_model">chatbot.tag</field>
+      <field name="view_mode">tree,form</field>
+      <field name="view_id" ref="chatbot_chatbot_tree_view" />
+    </record>
+    <menuitem id="chatbot_configuration_id" parent="chatbot_chatbot_menu" name="Configuration" sequence="10" groups="base.group_system" />
+    <menuitem id="chatbot_tag_menu" parent="chatbot_configuration_id" name="Tag" action="chatbot_tag_action" sequence="1" groups="base.group_system" />
+  </data>
+</odoo>

@@ -1,0 +1,18 @@
+<?xml version ='1.0' encoding="utf-8"?>
+<odoo>
+	<record id="pos_customer_note_view" model="ir.ui.view">
+		<field name="name">pos.customer.note</field>
+		<field name="model">pos.order</field>
+		<field name="inherit_id" ref="point_of_sale.view_pos_pos_form"/>
+		<field name='arch' type='xml'>
+			<xpath expr="//notebook/page[4]" position="after">
+			<page string="POS Customer Note" name='pos_note'>
+			<group>
+				<field name="pos_customer_note"/>
+			</group>
+			</page>
+			</xpath>
+		</field>
+
+	</record>
+</odoo>	

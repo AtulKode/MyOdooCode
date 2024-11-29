@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+pos_agent_matrix.access_agent_model,access_agent_model,pos_agent_matrix.model_agent_model,base.group_user,1,1,1,1

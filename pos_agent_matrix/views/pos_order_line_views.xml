@@ -1,0 +1,16 @@
+<?xml version ='1.0' encoding="utf-8"?>
+<odoo>
+	<record id="pos_agent_date_view" model="ir.ui.view">
+		<field name="name">pos.order.agent.date</field>
+		<field name="model">pos.order</field>
+		<field name="inherit_id" ref="point_of_sale.view_pos_pos_form"/>
+		<field name='arch' type='xml'>
+			<xpath expr="//notebook//field[@name='lines']//field[@name='full_product_name']" position="after">
+			
+				<field name="agent_id" string="Agent"/>
+				<field name="date"/>
+			</xpath>
+		</field>
+
+	</record>
+</odoo>	

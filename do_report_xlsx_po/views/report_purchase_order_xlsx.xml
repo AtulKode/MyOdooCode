@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+        <!-- Report view for Purchase Order XLSX report -->
+        <report
+            id="report_purchase_order_xlsx"
+            model="purchase.order"
+            string="Purchase Order XLSX"
+            report_type="xlsx"
+            name="do_report_xlsx_po.report_purchase_order_xlsx"
+            file="do_report_xlsx_po.report_purchase_order_xlsx"
+            attachment_use="True"
+        />
+    </data>
+</odoo>
