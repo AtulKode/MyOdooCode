@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="SMSDashboard" owl="1">
+          <div class="oh_dashboards"
+               style="margin-top: 20px; overflow-y: scroll; vertical-align: middle; overflow-x: clip; max-height: -webkit-fill-available; background-color: #f4f7fc;">
+            <div class="container-fluid my-5 o_hr_dashboard">
+                <t t-call="LoginUser1"/>
+                <t t-call="Managercrm1"/>
+                <!--                <t t-call="Admincrm"/>-->
+            </div>
+        </div>
+    </t>
+    <t t-name="LoginUser1">
+            <section class="dashboard_main_section" id="main_section_login" style="background-color: #ffffff; padding: 20px; border-radius: 8px;">
+                <div class="row">
+                    <div class="col-sm-12 mb-4">
+                        <div class="row">
+                            <div class="col-12 col-sm-12 col-md-8">
+                                <h2 class="section-header" style="color: #3a3a3a;">Approval Dashboard</h2>
+                            </div>
+                        </div>
+                        <hr style="border-top: 2px solid #e0e0e0;"/>
+                    </div>
+                </div>
+            </section>
+    </t>
+<t t-name="Managercrm1">
+    <section class="dashboard_main_section" id="main_section_manager">
+            <div class="crm_dash_cards row" style="background-color: #f9f9f9; border-radius: 10px; padding: 20px;">
+
+                <!-- Card 1: My Leads -->
+                <div class="col-sm-12 col-md-2">
+                    <div class="dashboard-card card-shadow my_lead" t-on-click="(e) => this.total_message(e)" style="background-color: #fce4ec;">
+                        <div class="dashboard-card__icon-container bg-mauve-light d-flex justify-content-center align-items-center" style="background-color: #f06292;">
+                            <span t-esc="my_request_count" class="text-muted"/>
+                        </div>
+                        <div class="dashboard-card__details" style="color: #3a3a3a;">
+                            <h3>
+                                <span>
+                                    <div id="leads_this_year"/>
+                                    <div id="leads_this_quarter"/>
+                                    <div id="leads_this_month"/>
+                                    <div id="leads_this_week"/>
+                                </span>
+                            </h3>
+                            <h4 style="font-size:18px; color: #d32f2f;">My Requests</h4>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 2: Approvals To Review -->
+                <div class="col-sm-12 col-md-2">
+                    <div class="dashboard-card card-shadow opportunity" t-on-click="(e) => this.approval_to_review(e)" style="background-color: #e8f5e9;">
+                        <div class="dashboard-card__icon-container bg-mauve-light d-flex justify-content-center align-items-center" style="background-color: #66bb6a;">
+                            <span t-esc="my_request_review_count" class="text-muted"/>
+                        </div>
+                        <div class="dashboard-card__details" style="color: #3a3a3a;">
+                            <h3>
+                                <span>
+                                    <div id="opp_this_year"/>
+                                    <div id="opp_this_quarter"/>
+                                    <div id="opp_this_month"/>
+                                    <div id="opp_this_week"/>
+                                </span>
+                            </h3>
+                            <h4 style="font-size:18px; color: #388e3c;">Approvals To Review</h4>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 3: All Approvals -->
+                <div class="col-sm-12 col-md-2">
+                    <div class="dashboard-card card-shadow opportunity" t-on-click="(e) => this.all_approval(e)" style="background-color: #e3f2fd;">
+                        <div class="dashboard-card__icon-container bg-mauve-light d-flex justify-content-center align-items-center" style="background-color: #42a5f5;">
+                            <span t-esc="my_request_all_count" class="text-muted"/>
+                        </div>
+                        <div class="dashboard-card__details" style="color: #3a3a3a;">
+                            <h3>
+                                <span>
+                                    <div id="opp_this_year"/>
+                                    <div id="opp_this_quarter"/>
+                                    <div id="opp_this_month"/>
+                                    <div id="opp_this_week"/>
+                                </span>
+                            </h3>
+                            <h4 style="font-size:18px; color: #1976d2;">All Approvals</h4>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 4: Deleted Requests -->
+                <div class="col-sm-12 col-md-2">
+                    <div class="dashboard-card card-shadow opportunity" t-on-click="(e) => this.deleted_approval_req(e)" style="background-color: #fff3e0;">
+                        <div class="dashboard-card__icon-container bg-mauve-light d-flex justify-content-center align-items-center" style="background-color: #ffb74d;">
+                            <span t-esc="my_request_deleted_count" class="text-muted"/>
+                        </div>
+                        <div class="dashboard-card__details" style="color: #3a3a3a;">
+                            <h3>
+                                <span>
+                                    <div id="opp_this_year"/>
+                                    <div id="opp_this_quarter"/>
+                                    <div id="opp_this_month"/>
+                                    <div id="opp_this_week"/>
+                                </span>
+                            </h3>
+                            <h4 style="font-size:18px; color: #f57c00;">Deleted Requests</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        <!-- New Row for Avg Time Cards -->
+        <div class="crm_dash_cards row mt-4">
+            <!-- Filters for Cards -->
+        <div class="col-sm-12 col-md-12 mb-4">
+            <div class="filters card-shadow p-3" style="background-color: #ffffff; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+                <div class="row">
+                    <div class="col-sm-12 col-md-4">
+                        <label for="dateFilter" style="font-weight: bold; color: #333;">Date:</label>
+                        <select id="dateFilter" class="form-control" 
+                            style="border-radius: 6px; border: 1px solid #ddd; padding: 10px;"
+                            t-on-change="(e) => this.updateFilters('date', e)" 
+                            onmouseover="this.style.borderColor='#007bff'" 
+                            onfocus="this.style.borderColor='#007bff'; this.style.boxShadow='0 0 5px rgba(0, 123, 255, 0.5)'" 
+                            onblur="this.style.boxShadow=''; this.style.borderColor='#ddd'">
+                            <option value="">None</option>
+                            <option value="day">Day</option>
+                            <option value="week">Week</option>
+                            <option value="month">Month</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-12 col-md-4">
+                        <label for="stageFilter" style="font-weight: bold; color: #333;">Stage:</label>
+                        <select id="stageFilter" class="form-control" 
+                            style="border-radius: 6px; border: 1px solid #ddd; padding: 10px;"
+                            t-on-change="(e) => this.updateFilters('stage', e)" 
+                            onmouseover="this.style.borderColor='#007bff'" 
+                            onfocus="this.style.borderColor='#007bff'; this.style.boxShadow='0 0 5px rgba(0, 123, 255, 0.5)'" 
+                            onblur="this.style.boxShadow=''; this.style.borderColor='#ddd'">
+                            <option value="">None</option>
+                            <option value="in_progress">In Progress</option>
+                            <option value="paid">Paid</option>
+                            <option value="approved">Approved</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-12 col-md-4">
+                        <label for="approvalTypeFilter" style="font-weight: bold; color: #333;">Approval Type:</label>
+                        <select id="approvalTypeFilter" class="form-control" 
+                            style="border-radius: 6px; border: 1px solid #ddd; padding: 10px;"
+                            t-on-change="(e) => this.updateFilters('approvalType', e)" 
+                            onmouseover="this.style.borderColor='#007bff'" 
+                            onfocus="this.style.borderColor='#007bff'; this.style.boxShadow='0 0 5px rgba(0, 123, 255, 0.5)'" 
+                            onblur="this.style.boxShadow=''; this.style.borderColor='#ddd'">
+                            <option value="">None</option>
+                            <option value="normal_from">Normal Form</option>
+                            <option value="petty_cash">Petty Cash</option>
+                            <option value="progress_invoice">Progress Invoice</option>
+                            <option value="adv_behalf">Adv Behalf</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+                <!-- Card 5: Avg Time: Submit to Paid -->
+                <div class="col-sm-12 col-md-4">
+                    <div class="dashboard-card card-shadow avg_time_to_paid" style="background-color: #e3f2fd;">
+                        <div class="dashboard-card__icon-container bg-mauve-light d-flex justify-content-center align-items-center" style="background-color: #42a5f5;">
+                            <span t-esc="avg_time_submit_to_paid" class="text-muted" style="margin-right: -13px;"/>
+                        </div>
+                        <div class="dashboard-card__details text-center">
+                            <h3>
+                                <span>
+                                    <div id="avg_time_submit_to_paid_value"/>
+                                </span>
+                            </h3>
+                            <h4 style="font-size:14px; color: #1976d2;">Avg Time: Submit to Paid</h4>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 6: Avg Time: Submit to All Approvals -->
+                <div class="col-sm-12 col-md-4">
+                    <div class="dashboard-card card-shadow avg_time_all_approved" style="background-color: #e8f5e9;">
+                        <div class="dashboard-card__icon-container bg-mauve-light d-flex justify-content-center align-items-center" style="background-color: #66bb6a;">
+                            <span t-esc="avg_time_submit_to_all_approved" class="text-muted" style="margin-right: -13px;"/>
+                        </div>
+                        <div class="dashboard-card__details text-center">
+                            <h3>
+                                <span>
+                                    <div id="avg_time_submit_to_all_approved_value"/>
+                                </span>
+                            </h3>
+                            <h4 style="font-size:14px; color: #388e3c;">Avg Time: Submit to All Approvals</h4>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 7: Avg Time: Submit to First Approval -->
+                <div class="col-sm-12 col-md-4">
+                    <div class="dashboard-card card-shadow avg_time_first_approval" style="background-color: #fff3e0;">
+                        <div class="dashboard-card__icon-container bg-mauve-light d-flex justify-content-center align-items-center" style="background-color: #ffb74d;">
+                            <span t-esc="avg_time_submit_to_first_approval" class="text-muted" style="margin-right: -13px;"/>
+                        </div>
+                        <div class="dashboard-card__details text-center">
+                            <h3>
+                                <span>
+                                    <div id="avg_time_submit_to_first_approval_value"/>
+                                </span>
+                            </h3>
+                            <h4 style="font-size:14px; color: #f57c00;">Avg Time: Submit to First Approval</h4>
+                        </div>
+                    </div>
+                </div>
+
+            <!-- Card 8: Submitted request -->
+            <div class="col-sm-12 col-md-2">
+                <div class="dashboard-card card-shadow submitted_request" t-on-click="(e) => this.view_submitted_req(e)" style="background-color: #e8f5e9;">
+                    <div class="dashboard-card__icon-container bg-mauve-light d-flex justify-content-center align-items-center" style="background-color: #66bb6a;">
+                        <span t-esc="sub_requests_count" class="text-muted"/>
+                    </div>
+                    <div class="dashboard-card__details text-center" style="color: #3a3a3a;">
+                        <h3>
+                            <span>
+                                <div id="submitted_requests"/>
+                            </span>
+                        </h3>
+                        <h4 style="font-size:14px; color: #388e3c;">Submitted Request</h4>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 9: Approved request -->
+            <div class="col-sm-12 col-md-2">
+                <div class="dashboard-card card-shadow approved_request" t-on-click="(e) => this.view_approved_req(e)" style="background-color: #e3f2fd;">
+                    <div class="dashboard-card__icon-container bg-mauve-light d-flex justify-content-center align-items-center" style="background-color: #42a5f5;">
+                        <span t-esc="approve_requests_count" class="text-muted"/>
+                    </div>
+                    <div class="dashboard-card__details text-center" style="color: #3a3a3a;">
+                        <h3>
+                            <span>
+                                <div id="approved_requests"/>
+                            </span>
+                        </h3>
+                        <h4 style="font-size:14px; color: #1976d2;">Approved Request</h4>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 10: In Progress request -->
+            <div class="col-sm-12 col-md-2">
+                <div class="dashboard-card card-shadow in_progress_request" t-on-click="(e) => this.view_in_progress_req(e)" style="background-color: #fff3e0;">
+                    <div class="dashboard-card__icon-container bg-mauve-light d-flex justify-content-center align-items-center" style="background-color: #ffb74d;">
+                        <span t-esc="inprogress_requests_count" class="text-muted"/>
+                    </div>
+                    <div class="dashboard-card__details text-center" style="color: #3a3a3a;">
+                        <h3>
+                            <span>
+                                <div id="in_progress_requests"/>
+                            </span>
+                        </h3>
+                        <h4 style="font-size:14px; color: #f57c00;">In Progress Request</h4>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 11: Paid request -->
+            <div class="col-sm-12 col-md-2">
+                <div class="dashboard-card card-shadow paid_request" t-on-click="(e) => this.view_paid_req(e)" style="background-color: #e3f2fd;">
+                    <div class="dashboard-card__icon-container bg-mauve-light d-flex justify-content-center align-items-center" style="background-color: #42a5f5;">
+                        <span t-esc="paid_requests_count" class="text-muted"/>
+                    </div>
+                    <div class="dashboard-card__details text-center" style="color: #3a3a3a;">
+                        <h3>
+                            <span>
+                                <div id="paid_requests"/>
+                            </span>
+                        </h3>
+                        <h4 style="font-size:14px; color: #1976d2;">Paid Request</h4>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 12: Rejected request -->
+            <div class="col-sm-12 col-md-2">
+                <div class="dashboard-card card-shadow rejected_request" t-on-click="(e) => this.view_rejected_req(e)" style="background-color: #fce4ec;">
+                    <div class="dashboard-card__icon-container bg-mauve-light d-flex justify-content-center align-items-center" style="background-color: #f06292;">
+                        <span t-esc="rejected_requests_count" class="text-muted"/>
+                    </div>
+                    <div class="dashboard-card__details text-center" style="color: #3a3a3a;">
+                        <h3>
+                            <span>
+                                <div id="rejected_requests"/>
+                            </span>
+                        </h3>
+                        <h4 style="font-size:14px; color: #d32f2f;">Rejected Request</h4>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12 text-center">
+                <button id="exportButton" class="btn btn-primary" t-on-click="exportReport">Export Report</button>
+            </div>
+        </div>
+
+        <!-- Graph Section -->
+        <div class="row mt-5">
+            <div class="col-sm-12 col-md-4">
+                <div class="chart-container card-shadow">
+                    <h2><b>Total Requests</b></h2>
+                    <hr/>
+                    <div class="graph_canvas" style="margin-top: 30px;">
+                        <canvas class="annual_target" width="340px" height="400px"/>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-12 col-md-4">
+                <div class="sales_activity_pie_div chart-container card-shadow">
+                    <h2>Request By Stages</h2>
+                    <hr/>
+                    <div class="graph_canvas">
+                        <canvas class="sales_activity" width="200" height="120"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</t>
+
+</templates>
