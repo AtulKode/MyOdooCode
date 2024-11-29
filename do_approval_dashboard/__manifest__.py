@@ -20,17 +20,14 @@
 #
 ################################################################################
 {
-    'name': "Approval Dashboard",
+    'name': "Do Approval Dashboard",
     'version': '17.0.1.0.1',
     'category': 'Extra Tools',
     'summary': """Get a visual report of CRM through a Dashboard in CRM """,
     'description': """CRM dashboard module brings a multipurpose graphical
      dashboard for CRM module and making the relationship management 
      better and easier""",
-    'author': 'Cybrosys Techno Solutions',
-    'company': 'Cybrosys Techno Solutions',
-    'maintainer': 'Cybrosys Techno Solutions',
-    'website': "https://www.cybrosys.com",
+
     'depends': ['approval_custom','approvals'],
     'data': [
         'views/crm_team_views.xml',
