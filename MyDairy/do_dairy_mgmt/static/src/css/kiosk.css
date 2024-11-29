@@ -1,0 +1,88 @@
+.card {
+  width: 526px;
+  height: 433px;
+  text-align: center;
+  background: rgb(236, 236, 236);
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+}
+.card-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+.card-body{
+  text-align: center;
+  justify-content: center;
+}
+.rate_config{
+  padding-top:10px;
+}
+.confirm{
+  display: flex;
+  text-align: center;
+  justify-content: center;
+}
+.o_barcode_header{
+  flex: 46px;
+  color: white;
+  background-color: #714B67;
+}
+
+.dairy-nav{
+  padding: 5px;
+  display: flex;
+  background-color: #71639e;
+  height: 35px;
+  color: white;
+}
+.animal-rate{
+  display: flex;
+  justify-content: space-between;
+  margin-left: 50px;
+  margin-right: 50px;
+  margin-top: 5px;
+}
+.next-view{
+
+  display: flex;
+  text-align: center;
+  justify-content: center;
+}
+.intake-view{
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  background-color: #71639e;
+  height: 55px;
+  color: white; 
+}
+.animal-milk-rate{
+  display: flex;
+  justify-content: space-between;
+}
+.exit-kiosk{
+  background-color: #71639e;
+}
+.animal-cards{
+  display: flex;
+}
+.animal-button{
+  display: flex;
+  justify-content: space-between;
+}
+
+.o_intake_button{
+  display: flex;
+  justify-content: space-between;
+  justify-content: center;
+}
+.o_discard{
+  width: 50%;
+  height: 60px;
+}
+.o_save{
+  width: 50%;
+  height:60px;
+}
+

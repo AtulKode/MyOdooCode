@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- do_dairy_management_customer_registration_view.xml -->
+
+<odoo>
+    <data>
+        <record id="view_customer_registration_form" model="ir.ui.view">
+            <field name="name">do_dairy_management.customer_registration.form</field>
+            <field name="model">customer.registration</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger" invisible="active"/>
+                        <group>
+                            <group>
+                                <field name="dairy_cust_id"/>
+                                
+                                <field name="partner_id" widget="res_partner_many2one"
+                                       context="{'show_address': 1}"
+                                       options='{"always_reload": True}'/>
+                            <field name="dairy_id"/>
+                            </group>
+                            <group>
+                                <field name="animal_ids" widget="many2many_tags"/>
+                                <field name="no_of_animals"/>
+                                <field name="member_since"/>
+                                <field name="active" invisible="1"/>
+                            </group>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_customer_registration_tree" model="ir.ui.view">
+            <field name="name">do_dairy_management.customer.tree</field>
+            <field name="model">customer.registration</field>
+            <field name="priority">20</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="partner_id"/>
+                    <field name="no_of_animals"/>
+                    <field name="member_since"/>
+                    <field name="dairy_id"/>
+                </tree>
+
+            </field>
+        </record>
+
+        <record id="action_customer_registration" model="ir.actions.act_window">
+           <field name="name">Customer</field>
+           <field name="type">ir.actions.act_window</field>
+           <field name="res_model">customer.registration</field>
+           <field name="view_mode">tree,form</field>
+        </record>
+
+    </data>
+</odoo>

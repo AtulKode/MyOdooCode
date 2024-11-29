@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="do_pos_virtual_keyBoard.PartnerDetailsEdit" t-inherit="point_of_sale.PartnerDetailsEdit" t-inherit-mode="extension" >
+        <xpath expr="//input[@name='name']" position="attributes">
+            <attribute name="t-on-click">_onClickProductSearch</attribute>
+        </xpath>
+  
+        <xpath expr="//div[hasclass('partner-details-box')]/t//input" position="attributes">
+            <attribute name="t-on-click">_onClickProductSearch</attribute>
+        </xpath>
+   
+         <xpath expr="//input[@name='vat']" position="attributes">
+            <attribute name="t-on-click">_onClickProductSearch</attribute>
+        </xpath>
+    </t>
+</templates>

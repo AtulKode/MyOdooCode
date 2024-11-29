@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates id="template" xml:space="preserve">
+    <t t-name="do_pos_product_sort.SortProduct">
+        <div class="bg-view d-flex p-1" style="margin-left: auto;">
+            <div class="align-items-center d-flex">
+                <button type="button" class="btn btn-light d-flex" style="width: 100%;" t-on-click="() => this.sortBy()">Sort By<span t-if="this.state.selectedFilterLabel">: <t t-esc="this.state.selectedFilterLabel"/></span></button>
+            </div>
+        </div>
+    </t>
+</templates>

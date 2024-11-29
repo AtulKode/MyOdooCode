@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="do_odoo_debranding.Layout" name="Web layout extend" inherit_id="web.layout">
+        <xpath expr="//link[@type='image/x-icon']" position="replace">
+            <t t-set="website_id" t-value="request.env['website'].sudo().search([])"/>
+            <link type="image/x-icon" rel="shortcut icon" t-attf-href="data:image/png;base64,{{ website_id and website_id[0] and website_id[0].favicon and website_id[0].favicon.decode('utf-8') or '' }}"/>
+        </xpath>
+    </template>
+    <template id="do_odoo_debranding.brand_promo_extend" name='Brand Promotion modify' inherit_id="web.brand_promotion">
+        <xpath expr="//div[hasclass('o_brand_promotion')]" position="replace">
+        </xpath>
+    </template>
+</odoo>
+

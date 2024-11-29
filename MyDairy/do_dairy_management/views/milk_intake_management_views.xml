@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--do_dairy_management_milk_intake_management_view.xml -->
+
+<odoo>
+    <data>
+        <record id="view_milk_intake_management_form" model="ir.ui.view">
+            <field name="name">do_dairy_management.milk_intake_management.form</field>
+            <field name="model">milk.intake.management</field>
+            <field name="arch" type="xml">
+                <form id="mikl">
+                    <sheet>
+                        <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger" invisible="active"/>
+                        <group>  
+                            <group>
+                                <field name="milk_dairy_id"/>
+                                <field name="customer_id"/>
+                                <field name="animal_id" />
+                                <field name="for_date"/>
+                            </group>
+                            <group>
+                                <field name="active" invisible="1"/>
+                                <field name="quantity"/>
+                                <field name="fat"/>
+                                <field name="price"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_milk_intake_management_tree" model="ir.ui.view">
+            <field name="name">do_dairy_management.milk_intake_management.tree</field>
+            <field name="model">milk.intake.management</field>
+            <field name="priority">20</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="milk_dairy_id"/>
+                    <field name="customer_id"/>
+                    <field name="for_date"/>
+                    <field name="animal_id"/>
+                    <field name="quantity"/>
+                    <field name="fat"/>
+                    <field name="price"/>
+                </tree>
+
+            </field>
+        </record>
+
+        <record id="action_milk_intake_management" model="ir.actions.act_window">
+           <field name="name">Milk Intake</field>
+           <field name="type">ir.actions.act_window</field>
+           <field name="res_model">milk.intake.management</field>
+           <field name="view_mode">tree,form</field>
+        </record>
+
+    </data>
+</odoo>

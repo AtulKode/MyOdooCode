@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record model="ir.rule" id="rule_milk_dairy_owner">
+        <field name="name">Milk Dairy Owner Rule</field>
+        <field name="model_id" ref="model_milk_dairy"/>
+        <field name="global" eval="False"/>
+        <field name="domain_force">[('owner_id', '=', user.id)]</field>
+        <field name="groups" eval="[(4, ref('do_dairy_management.owner_user_id'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+
+    <record model="ir.rule" id="rule_milk_dairy_incharge">
+        <field name="name">Milk Dairy Incharge Rule</field>
+        <field name="model_id" ref="model_milk_dairy"/>
+        <field name="global" eval="False"/>
+        <field name="domain_force">[('incharge_id', '=', user.id)]</field>
+        <field name="groups" eval="[(4, ref('do_dairy_management.incharge_id'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+
+    <record model="ir.rule" id="rule_dairy_animal_owner">
+        <field name="name">Dairy Animal Owner Rule</field>
+        <field name="model_id" ref="model_animal_animal"/>
+        <field name="global" eval="False"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('do_dairy_management.owner_user_id'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+
+    <record model="ir.rule" id="rule_dairy_animal_incharge">
+        <field name="name">Dairy Animal Incharge Rule</field>
+        <field name="model_id" ref="model_animal_animal"/>
+        <field name="global" eval="False"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('do_dairy_management.incharge_id'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+
+    <record model="ir.rule" id="rule_dairy_rate_owner">
+        <field name="name">Dairy Rate Owner Rule</field>
+        <field name="model_id" ref="model_rate_management"/>
+        <field name="global" eval="False"/>
+        <field name="domain_force">[('create_uid', '=', user.id)]</field>
+        <field name="groups" eval="[(4, ref('do_dairy_management.owner_user_id'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+
+    <record model="ir.rule" id="rule_dairy_rate_incharge">
+        <field name="name">Dairy Rate Incharge Rule</field>
+        <field name="model_id" ref="model_rate_management"/>
+        <field name="global" eval="False"/>
+        <field name="domain_force">[('create_uid', '=', user.id)]</field>
+        <field name="groups" eval="[(4, ref('do_dairy_management.incharge_id'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+
+    <record model="ir.rule" id="rule_dairy_customer_owner">
+        <field name="name">Dairy Customer Owner Rule</field>
+        <field name="model_id" ref="model_customer_registration"/>
+        <field name="global" eval="False"/>
+        <field name="domain_force">[('create_uid', '=', user.id)]</field>
+        <field name="groups" eval="[(4, ref('do_dairy_management.owner_user_id'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+
+    <record model="ir.rule" id="rule_dairy_customer_incharge">
+        <field name="name">Dairy Customer Incharge Rule</field>
+        <field name="model_id" ref="model_customer_registration"/>
+        <field name="global" eval="False"/>
+        <field name="domain_force">[('create_uid', '=', user.id)]</field>
+        <field name="groups" eval="[(4, ref('do_dairy_management.incharge_id'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+
+    <record model="ir.rule" id="rule_dairy_intake_owner">
+        <field name="name">Dairy Intake Owner Rule</field>
+        <field name="model_id" ref="model_milk_intake_management"/>
+        <field name="global" eval="False"/>
+        <field name="domain_force">[('create_uid', '=', user.id)]</field>
+        <field name="groups" eval="[(4, ref('do_dairy_management.owner_user_id'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+
+    <record model="ir.rule" id="rule_dairy_intake_incharge">
+        <field name="name">Dairy Incharge Incharge Rule</field>
+        <field name="model_id" ref="model_milk_intake_management"/>
+        <field name="global" eval="False"/>
+        <field name="domain_force">[('create_uid', '=', user.id)]</field>
+        <field name="groups" eval="[(4, ref('do_dairy_management.incharge_id'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+
+
+<!--     <record model="ir.rule" id="rule_user_acces_level">
+        <field name="name">Milk Dairy User Access</field>
+        <field name="model_id" ref="base.model_res_users"/>
+        <field name="global" eval="False"/>
+        <field name="domain_force">[('', '=', )]</field>
+        <field name="groups" eval="[(4, ref('do_dairy_management.owner_user_id'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+    </record> -->
+</odoo>

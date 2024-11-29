@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates id="template" xml:space="preserve">
+    <t t-name="do_pos_product_sort.CategoryDialog" t-inherit="point_of_sale.CategorySelector" t-inherit-mode="extension">
+        <xpath expr="//div[1]/div[1]" position="after">
+            <t t-if="this.show_prod_filter">
+                <SortProduct/>
+            </t>
+        </xpath>
+    </t>
+</templates>

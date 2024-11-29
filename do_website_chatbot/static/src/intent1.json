@@ -1,0 +1,31 @@
+{
+    "intents": [
+        {
+            "tag": "I Have a pricing Question",
+            "patterns": [
+                "I Have a pricing Question"
+            ],
+            "responses": [
+                "<p>Hmmm, let me check if I can find someone that could help you with that...<br></p>"
+            ]
+        },
+        {
+            "tag": "What are you looking for?",
+            "patterns": [
+                "what are you looking for?"
+            ],
+            "responses": [
+                "<p>I am looking for your documentation<br></p>"
+            ]
+        },
+        {
+            "tag": "Email",
+            "patterns": [
+                "Would you mind leaving your email address so that we can reach you back?"
+            ],
+            "responses": [
+                "<p>Here is my mail&nbsp;<br>abc@gmail.com</p>"
+            ]
+        }
+    ]
+}

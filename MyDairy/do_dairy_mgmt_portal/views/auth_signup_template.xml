@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="dairy_info" name="Owner auth_signup form fields">
+        <t t-call="web.login_layout">
+            <!-- MultiStep Form -->
+            <div class="container-fluid" id="grad1">
+                <div class="row justify-content-center mt-0">
+                    <div class="col-11 col-sm-9 col-md-7 col-lg-6 text-center p-0 mt-3 mb-2">
+                        <div class="card px-0 pt-4 pb-0 mt-3 mb-3">
+                            <h2><strong>Sign Up Your User Account</strong></h2>
+                            <p>Fill all form fields to go to the next step</p>
+
+                            <div class="row">
+                                <div class="col-md-12 mx-0">
+                                    <form id="msform" action="/dairy/signup/data" method="POST" enctype="multipart/form-data">
+                                        
+                                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                        <!-- progressbar -->
+                                        <ul id="progressbar">
+                                            <li class="active" id="account"><strong>Dairy Information</strong></li>
+                                            <li id="personal"><strong>Owner Information</strong></li>
+                                            <li id="confirm"><strong>Incharge Information</strong></li>
+                                        </ul>
+                                        <!-- fieldsets -->
+                                        <fieldset>
+                                            <div class="form-card">
+                                                <h2 class="fs-title">Dairy Information</h2>
+                                                <input id ='d_name' type="text" name="dairy_name" placeholder="Dairy Name" required="1"/>
+                                                <input id='d_address' type="text" name="dairy_address" placeholder="Address"/>
+                                                <input id='c_no' type="text" name="certificate_no" placeholder="Certificate No"/>
+                                            </div>
+                                            <input type="button" name="next" class="next action-button" value="Next Step"/>
+                                        </fieldset>
+                                        <fieldset>
+                                            <div class="form-card">
+                                                <h2 class="fs-title">Owner Information</h2>
+                                                <input id='o_name' type="text" name="owner_name" placeholder="Owner Name"/>
+                                                
+                                                <label><input style='width: auto;justify-content: space-around;' type="checkbox" id="owner_add" name="filladdress"/> Same as Dairy Address</label>
+
+                                                <input id='o_address' type="text" name="owner_address" placeholder="Address"/>
+                                                <input id='o_contact' type="tel" name="contact_owner"  placeholder="Contact No. will work as login"/>
+                                            </div>
+                                            <input type="button" name="previous" class="previous action-button-previous" value="Previous"/>
+                                            <input type="button" name="next" class="next action-button" value="Next Step"/>
+                                        </fieldset>
+                                        <fieldset>
+                                            <div class="form-card">
+                                                <h2 class="fs-title">Incharge Information</h2>
+                                                <label><input style='width: auto;justify-content: space-around;' type="checkbox" id="owner_is_incharge" name="owner_inch"/> Owner is Incharge</label>
+
+                                                <div class='incharge_form'>
+                                                    <input id='inc_name' type="text" name="incharge_name" placeholder="Incharge Name"/>
+                                                <label for="inc_add" style="font-family: Arial, sans-serif; font-size: 16px; color: #333; margin-bottom: 8px; display: block;">Same as dairy/owner address:</label>
+                                                <select name="inc_add" id="incharge_add">
+                                                  <option style="color: #999;">-- select an option --</option>  
+                                                  <option class='copy_o_add' value="option1" style="color: #333;">Owner Address</option>
+                                                  <option class='copy_d_add' value="option2" style="color: #333;">Dairy Address</option>
+                                                </select>
+
+                                                    <input id='inc_address' type="text" name="incharge_address" placeholder="Address" />
+                                                    <input id='inc_contact' type="tel" name="contact_incharge" placeholder="Contact No. will work as login"/>
+                                                </div>                                         
+                                            </div>
+                                            <input type="button" name="previous" class="previous action-button-previous" value="Previous"/>
+                                            <input id ='submit' class="next action-button" type="submit" name="submit" value="Confirm"/>
+                                        </fieldset>
+                   
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <template id="dairy_success">
+        <t t-call="web.login_layout"> 
+            <div class="container-fluid" id="grad1">
+                <div class="row justify-content-center mt-0">
+                    <div class="col-11 col-sm-9 col-md-7 col-lg-6 text-center p-0 mt-3 mb-2">
+                        <div class="card px-0 pt-4 pb-0 mt-3 mb-3">  
+                            <div class="form-card">
+                                <h2 class="fs-title text-center">Success !</h2>
+                                <div class="row justify-content-center">
+                                    <div class="col-7 text-center">
+                                        <h5>Your application is under review</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>  
+            </div>          
+        </t>            
+    </template>
+
+</odoo>

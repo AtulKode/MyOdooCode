@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+do_company_sales_tax.access_sale_tax_limit,access_sale_tax_limit,do_company_sales_tax.model_sale_tax_limit,base.group_user,1,1,1,1
+do_company_sales_tax.access_sale_tax_wizard,access_sale_tax_wizard,do_company_sales_tax.model_sale_tax_wizard,base.group_user,1,1,1,1

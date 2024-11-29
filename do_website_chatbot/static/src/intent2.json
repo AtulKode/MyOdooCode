@@ -1,0 +1,31 @@
+{
+    "intents": [
+        {
+            "tag": "Test Tag",
+            "patterns": [
+                "Test this chatBot"
+            ],
+            "responses": [
+                "<p>Your Test is successful Thanks.</p>"
+            ]
+        },
+        {
+            "tag": "Website",
+            "patterns": [
+                "Can i Get your website url?"
+            ],
+            "responses": [
+                "<p>Sure Here it is \"<a href=\"http://doincredible.com\">http://doincredible.com</a>\"</p>"
+            ]
+        },
+        {
+            "tag": "Contact",
+            "patterns": [
+                "Can i get your contact No?"
+            ],
+            "responses": [
+                "<p>sure here it is 99****65434</p>"
+            ]
+        }
+    ]
+}

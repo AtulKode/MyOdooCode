@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+  <t t-name="do_pos_virtual_keyBoard.CashOpeningPopup" t-inherit="point_of_sale.CashOpeningPopup" t-inherit-mode="extension">
+    <xpath expr="//textarea" position="attributes">
+      <attribute name="t-on-click">_onClickProductSearch</attribute>
+    </xpath>
+ 
+  </t>
+</templates>

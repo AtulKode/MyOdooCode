@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+  <data noupdate="1">
+    <record id="do_website_chatbot" model="chatbot.chatbot">
+        <field name="name">Chatbot</field>
+        <field name="title">Hello, Is there anything I can assist you with?</field>
+        <field name="not_found_msg">Please help with other keywords</field>
+        <field name="icon" type="base64" file="do_website_chatbot/static/src/img/chat.png" />
+        <field name="chatbot_image" type="base64" file="do_website_chatbot/static/src/img/chat.png"/>
+    </record>
+  </data>
+</odoo>

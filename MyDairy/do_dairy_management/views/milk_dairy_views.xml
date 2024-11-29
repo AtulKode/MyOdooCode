@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--do_dairy_management_milk_dairyview.xml -->
+
+<odoo>
+    <data>
+        <record id="view_milk_dairy_form" model="ir.ui.view">
+            <field name="name">do_dairy_management.milk_dairy.form</field>
+            <field name="model">milk.dairy</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button name="action_new" string="New" class="btn-primary" type="object" invisible="state == 'new'"/>
+                        <button name="action_submit" string="Submit" class="btn-primary" type="object" invisible="state != 'new'"/>
+                        <button name="action_under_review" string="Under Review" class="btn-primary" type="object" invisible="state != 'submit'"/>
+                        <button name="action_approved" string="Approved" class="btn-primary" type="object" invisible="state != 'under_review'"/>
+                        <button name="action_rejected" string="Rejected" class="btn-primary" type="object" invisible="state != 'under_review'"/>
+                        <field name="state" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger" invisible="active"/>
+                        <group>
+                            <group>
+                                <field name="name" readonly="state not in ['new']"/>
+                                <field name="owner_id" readonly="state not in ['new']"/>
+                                <field name="incharge_id" readonly="state not in ['new']"/>
+                                <label for="street" string="Address"/>
+                                <div class="o_address_format">
+                                    <field name="street" placeholder="Street..." class="o_address_street" readonly="state not in ['new']"/>
+                                    <field name="street2" placeholder="Street 2..." class="o_address_street" readonly="state not in ['new']"/>
+                                    <field name="city" placeholder="City" class="o_address_city" readonly="state not in ['new']"/>
+                                    <field name="state_id" class="o_address_state" placeholder="State" options="{'no_open': True, 'no_quick_create': True}" context="{'default_country_id': country_id}" readonly="state not in ['new']"/>
+                                    <field name="zip" placeholder="ZIP" class="o_address_zip" readonly="state not in ['new']"/>
+                                    <field name="country_id" placeholder="Country" class="o_address_country" options='{"no_open": True, "no_create": True}' readonly="state not in ['new']"/>
+                                </div>
+                            </group>
+                            <group>
+                                <field name="active" invisible="1"/>
+                                <field name="certificate_no" readonly="state not in ['new']"/>
+                                <!-- <field name="certificate_photo" readonly="state not in ['new']"/> -->
+                                <field name="supported_animal_ids" widget="many2many_tags" readonly="state not in ['new']"/>
+                            </group>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_milk_dairy_tree" model="ir.ui.view">
+            <field name="name">do_dairy_management.milk_dairy.tree</field>
+            <field name="model">milk.dairy</field>
+            <field name="priority">20</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="owner_id"/>
+                    <field name="incharge_id"/>
+                    <field name="certificate_no"/>
+                    <!-- <field name="certificate_photo"/> -->
+                    <field name="supported_animal_ids" widget="many2many_tags"/>
+                </tree>
+
+            </field>
+        </record>
+
+        <record id="action_dairy" model="ir.actions.act_window">
+           <field name="name">Milk Dairy</field>
+           <field name="type">ir.actions.act_window</field>
+           <field name="res_model">milk.dairy</field>
+           <field name="view_mode">tree,form</field>
+        </record>
+
+    </data>
+</odoo>

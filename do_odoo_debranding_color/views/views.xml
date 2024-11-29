@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_debranding_form" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.debranding</field>
+        <field name="model">res.config.settings</field>
+        <field name="priority" eval="30"/>
+        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="inside">
+                <app data-string="Debrand" string="Debrand" name="do_odoo_debranding">
+                	<h2>Debranding Configurations</h2>
+                    <div class="row mt16 o_settings_container" id="debrand_settings">
+                        <div class="col-12 col-lg-6 o_setting_box" id="color_primary">
+                            <div class="o_setting_right_pane">
+                                <label for="theme_color" string="Theme Color"/>
+                                <div id="color_primary" class="mt8">
+                                    <field name="theme_color" widget="color"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </app>
+            </xpath>
+        </field>
+    </record>
+</odoo>
+
+<!-- @if $dynamic_brand_primary_color {
+    $o-brand-primary: #{$dynamic_brand_primary_color};
+}
+
+.btn-primary {
+    background-color: $o-brand-primary;
+    // Other button styles...
+} -->

@@ -1,0 +1,10 @@
+$o-brand-primary: #0075FF !default;
+
+@if $dynamic_brand_primary_color {
+    $o-brand-primary: #{$dynamic_brand_primary_color};
+}
+
+.btn-primary {
+    background-color: $o-brand-primary;
+    // Other button styles...
+}

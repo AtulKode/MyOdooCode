@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <menuitem id="dairy_management"
+        name="Dairy Management"
+        sequence="30"/>
+
+    <menuitem id="menu_dairy_config"
+        name="Configuration"
+        parent="dairy_management"
+        sequence="70"/>
+
+    <menuitem id="dairy_registratiion_menu"
+        name="Dairy"
+        parent="menu_dairy_config"
+        action="action_dairy"
+        sequence="1"/>
+
+    <menuitem id="milk_intake_management_menu"
+        name="Intake"
+        parent="dairy_management"
+        action="action_milk_intake_management"
+        sequence="2"/>
+
+    <menuitem id="rate_management_menu"
+        name="Rate"
+        parent="menu_dairy_config"
+        action="action_rate_management"
+        sequence="3"/>
+
+    <menuitem id="customer_registration_menu"
+        name="Customer"
+        parent="dairy_management"
+        action="action_customer_registration"
+        sequence="4"/>
+
+    <menuitem id="animal_menu"
+        name="Animal"
+        parent="menu_dairy_config"
+        action="action_animal"
+        sequence="5"/>
+</odoo>

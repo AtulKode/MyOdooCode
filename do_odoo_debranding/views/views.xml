@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_debranding_form" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.debranding</field>
+        <field name="model">res.config.settings</field>
+        <field name="priority" eval="30"/>
+        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="inside">
+                <app data-string="Debrand" string="Debrand" name="do_odoo_debranding">
+                	<h2>Debranding Configurations</h2>
+                    <div class="row mt16 o_settings_container" id="debrand_settings">
+                        <div class="col-12 col-lg-6 o_setting_box" id="company_logo">
+                            <div class="o_setting_right_pane">
+                            <label for="company_logo" string="Company Logo"/>
+                            <div id="company_logo" class="mt8">
+                                <field name="company_logo"
+                                       widget="image"
+                                       class="w-25 mt-2" />
+                            </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 o_setting_box" id="favicon">
+                            <div class="o_setting_right_pane">
+                            <label for="favicon" string="Favicon"/>
+                                <div id="favicon" class="oe_inline">
+                                    <field name="favicon"
+                                           widget="image"
+                                           class="float-left oe_avatar" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 o_setting_box" id="company_name">
+                            <div class="o_setting_right_pane">
+                            <label for="company_name" string="Company Name"/>
+                                <div id="company_name" class="oe_inline">
+                                    <field name="company_name"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 o_setting_box" id="company_website">
+                            <div class="o_setting_right_pane">
+                            <label for="company_website" string="Company Website"/>
+                            <div id="company_website" class="mt8">
+                                <field name="company_website"/>
+                            </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 o_setting_box" id="button_error">
+                            <div class="o_setting_right_pane">
+                            <label for="error" string="Check Error Dialogue"/>
+                            <div id="check_error" class="mt8">
+                                <button name="error"
+                                        id="error"
+                                        type="object"
+                                        string="error"
+                                        class="btn-danger" />
+                            </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 o_setting_box" id="button_warning">
+                            <div class="o_setting_right_pane">
+                            <label for="show_warning" string="Check Warning Dialogue"/>
+                            <div id="check_warning" class="mt8">
+                                <button name="show_warning"
+                                        id="warning"
+                                        type="object"
+                                        string="warning"
+                                        class="btn-warning" />
+                            </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 o_setting_box" id="color_primary">
+                            <div class="o_setting_right_pane">
+                                <label for="dynamic_brand_primary_color" string="Add Color Code"/>
+                                <div id="color_primary" class="mt8">
+                                    <field name="dynamic_brand_primary_color"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </app>
+            </xpath>
+        </field>
+    </record>
+</odoo>

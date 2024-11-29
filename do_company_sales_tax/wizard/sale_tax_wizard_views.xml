@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="sale_tax_wizard_view_form" model="ir.ui.view">
+        <field name="name">sale.wizard.form</field>       
+        <field name="model">sale.tax.wizard</field>     
+        <field name="arch" type="xml">       
+        <form string="Sale Tax Wizard">
+            <h3>There are tax changes.</h3>
+            <h4>
+                Please click on YES if you want to accept it. <br/>
+                Else please click on NO.
+            </h4>
+            <footer>
+                <button string="Yes" class="btn btn-primary" close="1" type="object" name="confirm_sale_order"/>
+                <button string="No" special="cancel" class="btn-secondary" close="1" />
+            </footer>
+        </form>
+        </field>
+    </record>
+
+    <record id="tax_wizard_action" model="ir.actions.act_window">
+        <field name="name">Sale Tax Wizard</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">sale.tax.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="sale_tax_wizard_view_form"/>    
+        <field name="target">new</field>
+    </record>
+</odoo>

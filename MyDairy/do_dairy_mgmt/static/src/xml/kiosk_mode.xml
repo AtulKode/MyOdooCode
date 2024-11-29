@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<template xml:space="preserve">
+    <t t-name="do_dairy_mgmt.clientaction">
+        <div class='card-container'>
+            <div class="card">
+            <div style="text-align: left;" class="exit-kiosk">
+                <button t-on-click="exit_kiosk" class="o_exit" style="border-radius: 5px;">
+                    <i class="fa fa-arrow-left"></i>
+                </button>
+            </div>
+                <div class="card-body d-flex flex-column p-0 p-md-4">
+                    <h1>Welcome <t t-esc="this.user"/></h1>
+                    <h2 class="mt-5"> <t t-esc="this.current_date"/></h2>
+                    <t t-if="this.dairies.length">
+                        <t t-if="this.dairies.length &gt; 1">
+                            <h2>Select your Dairy</h2>
+                            <div>
+                                <select class="form-select" t-on-change="handleDairySelection">
+                                    <option value="none">--select--</option>
+                                    <t t-foreach="this.dairies" t-as="diary" t-key="diary.id">
+                                        <option t-att-value="diary.id"><t t-esc="diary.name"/></option>
+                                    </t>
+                                </select> 
+                            </div>
+                        </t>
+                        <t t-else="">
+                            <span style="margin-top:20px;">Your Dairy</span>
+                            <h3><t t-esc="this.dairies[0].name"/></h3>
+                        </t>
+                    </t>
+                    <div class="rate_config"></div>
+
+<!--                     <h2>Scan</h2>
+                    <div>
+                        <a class="btn btn-primary"> <i class="fa fa-camera fa-2x"></i> <div>Tap to scan</div></a>
+                    </div> -->
+                </div>
+
+                <div class="confirm"></div>
+            </div>
+        </div>
+    </t>
+</template>
