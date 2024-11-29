@@ -1,0 +1,60 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<odoo>
+
+    <record id="res_partner_form_view_inherit" model="ir.ui.view">
+        <field name="name">res.partner.form.inherit.albanna</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='vat']" position="after">
+                <field name="is_invoice_salesperson"/>
+                <field name="is_warehouse_manager"/>
+            </xpath>
+        </field>
+    </record>
+    <record id="stock_picking_form_view_inherit_qa_manager" model="ir.ui.view">
+        <field name="name">stock.picking.qa.manager</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='owner_id']" position="after">
+                <field name="quality_assurance_user_id" readonly="True"/>
+                <field name="validated_user_id" readonly="True"/>
+            </xpath>
+        </field>
+    </record>
+    <record id="account_move_form_view_inherit" model="ir.ui.view">
+        <field name="name">account.move.form.inherit.albanna</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='partner_shipping_id']" position="after">
+                <field name="invoice_sales_person_id" options="{'no_create': True, 'no_edit': True}" attrs="{'invisible': [('move_type', 'not in', ('out_invoice', 'out_refund', 'out_receipt'))]}"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="qlty_assurance_employee" model="ir.ui.view">
+        <field name="name">qlty.assurance.employee</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='coach_id']" position="after">
+                <field name="is_qlty_assurance_manager"/>
+            </xpath>
+        </field>
+    </record>
+    <record id="purchase_order_form_inherit_view_requestioner" model="ir.ui.view">
+        <field name="name">purchase.order.requestioner</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="requestioner"/>
+            </xpath> 
+            <xpath expr="//field[@name='picking_type_id']" position="after">
+                <field name="terms_id"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

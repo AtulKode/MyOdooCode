@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<template id="report_product_label_div">
+    <div style="width: 95mm !important; height: 34mm !important; border: 1px solid black; padding: 5px; margin: 5px; margin-left: 8px; position: relative;">
+        <div style="font-size: 25px; font-weight: bold; position: absolute; top: 0;">
+            <t t-esc="prod.name"/>
+        </div>
+        <div style="position: absolute; font-size: 16px; bottom: 40px;">
+            Cod.Art <span t-field="prod.barcode"/>
+        </div>
+        <div style="font-size: 45px; font-weight: bolder; right: 5px; position: absolute; bottom: 30px;">
+            <span t-field="prod.list_price" t-options="{'widget': 'monetary', 'display_currency': prod.currency_id}"/>
+        </div>
+        <div style="font-size: 20px; position: absolute; bottom: 0;">
+            Prezzo at <span t-field="prod.uom_id"/>
+            <span style="margin-left: 20px;" t-field="prod.measure_price"/>
+        </div>
+    </div>
+</template>
+
+<template id="report_product_label">
+    <t t-call="web.basic_layout">
+        <t t-set="orig_size" t-value="len(docs)"/>
+        <t t-set="size" t-value="orig_size // 2"/>
+        <t t-if="orig_size % 2 > 0">
+            <t t-set="size" t-value="size + 1"/>
+        </t>
+        <t t-set="no_of_pages" t-value="size // 8"/>
+        <t t-if="size % 8 > 0">
+            <t t-set="no_of_pages" t-value="no_of_pages + 1"/>
+        </t>
+        <t t-foreach="range(0, no_of_pages)" t-as="pg">
+            <!-- <t t-if="pg > 0">
+                <p style="page-break-before:always;"> </p>
+            </t> -->
+            <t t-set="start_idx" t-value="pg * 8"/>
+            <t t-set="end_idx" t-value="start_idx + 8"/>
+            <t t-if="end_idx > size">
+                <t t-set="end_idx" t-value="size"/>
+            </t>
+            <div class="page" style="padding-top: 5px;">
+                <table style="border: 1px dashed #333">
+                    <t t-foreach="range(start_idx, end_idx)" t-as="cnt">
+                        <tr style="margin-top: 4px;">
+                            <td style="border: 1px dashed #333">
+                                <t t-call="do_product_label_customise.report_product_label_div">
+                                    <t t-set="prod" t-value="docs[cnt * 2]"/>
+                                </t>
+                            </td>
+                            <td t-if="orig_size > cnt * 2 + 1" style="border: 1px dashed #333">
+                                <t t-call="do_product_label_customise.report_product_label_div">
+                                    <t t-set="prod" t-value="docs[cnt * 2 + 1]"/>
+                                </t>
+                            </td>
+                        </tr>
+                    </t>
+                </table>
+            </div>
+        </t>
+    </t>
+</template>
+</odoo>

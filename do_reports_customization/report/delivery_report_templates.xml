@@ -1,0 +1,558 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<odoo>
+
+<!--    <template inherit_id="web.external_layout_boxed" id="boxed_footer_inherit_delivery">-->
+<!--        <xpath expr="//div[@t-attf-class='header o_company_#{company.id}_layout']/div" position="inside">-->
+<!--            <div class="row" t-if="o and o._name == 'stock.picking'">-->
+<!--                <span class="col-12 not-first-page text-end">-->
+<!--                    <strong t-esc="o.name"/>-->
+<!--                </span>-->
+<!--           </div>-->
+<!--        </xpath>-->
+<!--    </template>-->
+
+    <template id="stock_report_delivery_package_section_line_copy_1">
+        <tr t-att-class="'bg-200 fw-bold o_line_section'">
+          <td colspan="99" name="package_info">
+            <span t-field="package.name"/>
+          </td>
+        </tr>
+    </template>
+
+    <template id="stock_report_delivery_has_serial_move_line_copy_1">
+        <td>
+          <span t-field="move_line.product_id"/>
+          <!-- this is an annoying workaround for the multiple types of descriptions (often auto-filled) that we do not want to print -->
+          <!-- this makes it so we can pre-filter the descriptions in inherited templates since we cannot extend the standard "if" condition -->
+          <!-- let's agree that pre-filtered descriptions will be set to "" -->
+          <t t-if="not description and description != ''">
+            <t t-set="description" t-value="move_line.move_id.description_picking"/>
+          </t>
+          <p t-if="description !='' and description != move_line.product_id.name">
+            <span t-esc="description"/>
+          </p>
+        </td>
+        <t t-if="has_serial_number" name="move_line_lot">
+          <td class="text-center">
+            <span t-field="move_line.lot_id.name"/>
+          </td>
+        </t>
+        <t t-if="has_expiry_date">
+          <td class="text-center">
+            <span t-field="move_line.lot_id.expiration_date" t-options-widget="&quot;date&quot;"/>
+          </td>
+        </t>
+        <td class="text-center" name="move_line_lot_qty_done">
+          <span t-field="move_line.qty_done" t-options-widget="&quot;integer&quot;"/>
+          <span t-field="move_line.product_uom_id"/>
+        </td>
+    </template>
+
+    <template id="stock_report_delivery_aggregated_move_lines_copy_1">
+        <tr t-foreach="aggregated_lines" t-as="line">
+          <td>
+            <span t-esc="aggregated_lines[line]['name']"/>
+            <p t-if="aggregated_lines[line]['description']">
+              <span t-esc="aggregated_lines[line]['description']"/>
+            </p>
+          </td>
+          <td class="text-center" name="move_line_aggregated_qty_ordered">
+            <span t-esc="aggregated_lines[line]['qty_ordered']" t-options="{'widget': 'float', 'decimal_precision': 'Product Unit of Measure'}"/>
+            <span t-esc="aggregated_lines[line]['product_uom'].name"/>
+          </td>
+          <td class="text-center" name="move_line_aggregated_qty_done">
+            <t t-if="aggregated_lines[line]['qty_done']">
+              <span t-esc="aggregated_lines[line]['qty_done']" t-options="{'widget': 'float', 'decimal_precision': 'Product Unit of Measure'}"/>
+              <span t-esc="aggregated_lines[line]['product_uom'].name"/>
+            </t>
+          </td>
+        </tr>
+    </template>
+
+    <template id="deliveryslip_albanna_template">
+        <t t-call="web.html_container">
+          <t t-call="web.external_layout">
+            <t t-set="o" t-value="o.with_context(lang=o.partner_id.lang or o.env.lang)"/>
+            <t t-set="partner" t-value="o.partner_id or (o.move_ids and o.move_ids[0].partner_id) or False"/>
+            <div class="page">
+              <div class="row" style="position:relative;top:-30px;">
+                <div class="col-4">
+<!--                  <h4>-->
+<!--                    <span>Customer</span>-->
+<!--                  </h4>-->
+                  <t t-if="o.partner_id.name">
+                    <h4 t-field="o.partner_id.name"/>
+                  </t>
+                  <t t-if="o.partner_id.x_studio_contact_name_en">
+                    <span t-field="o.partner_id.x_studio_contact_name_en"/>
+                    <br/>
+                  </t>
+                  <t t-if="o.partner_id.street">
+                    <span t-field="o.partner_id.street"/>
+                    <br/>
+                  </t>
+                  <t t-if="o.partner_id.city">
+                    <span t-field="o.partner_id.city"/>
+                    <br/>
+                  </t>
+                  <t t-if="o.partner_id.state_id">
+                    <span t-field="o.partner_id.state_id"/>
+                  </t>
+<!--                  <t t-if="o.partner_id.zip">-->
+<!--                    , <span t-field="o.partner_id.zip"/>-->
+<!--                  </t>-->
+                  <t t-if="o.partner_id.country_id">
+                    , <span t-field="o.partner_id.country_id"/>
+                  </t>
+                </div>
+                <div class="col-4">
+                  <h2 class="text-center">
+                    <span style="font-family:adobe arabic; color: #af161c;"> مستند تسليم </span>
+                  </h2>
+                  <h2 class="text-center">
+                    <span style="color: #af161c;">Delivery Note</span>
+                  </h2>
+                  <h2 class="text-center">
+                    <span t-field="o.name" style="border: solid 1px; color: #af161c;"/>
+                  </h2>
+                </div>
+                <div class="col-4" style="direction:rtl; font-family:adobe arabic">
+                  <t t-if="o.partner_id.x_studio_char_field_makkU">
+                    <h4 t-field="o.partner_id.x_studio_char_field_makkU"/>
+                  </t>
+                  <t t-if="o.partner_id.x_studio_contact_name_ar">
+                    <span t-field="o.partner_id.x_studio_contact_name_ar"/>
+                    <br/>
+                  </t>
+                  <t t-if="o.partner_id.x_studio_street_ar">
+                    <span t-field="o.partner_id.x_studio_street_ar"/>
+                    <br/>
+                  </t>
+                  <t t-if="o.partner_id.x_studio_city_ar_1">
+                    <span t-field="o.partner_id.x_studio_city_ar_1"/>
+                    <br/>
+                  </t>
+                  <t t-if="o.partner_id.x_studio_state_ar">
+                    , <span t-field="o.partner_id.x_studio_state_ar"/>
+                  </t>
+<!--                  <t t-if="o.partner_id.x_studio_area_ar">-->
+<!--                    , <span t-field="o.partner_id.x_studio_area_ar"/>-->
+<!--                  </t>-->
+                  <t t-if="o.partner_id.x_studio_country_ar">
+                    , <span t-field="o.partner_id.x_studio_country_ar"/>
+                  </t>
+                </div>
+              </div>
+              <div class="row mt16" style="position:relative;top:-10px;">
+                <div t-if="o.origin" class="col-6" name="div_origin">
+                  <strong>Sales Order:</strong>
+                  <p t-field="o.origin"/>
+                </div>
+                <div t-if="o.state" class="col-6" name="div_sched_date" style="text-align:right !important;">
+                  <strong>Shipping Date:</strong>
+                  <t t-if="o.state == 'done'">
+                    <p t-field="o.date_done" t-options="{'widget': 'date'}"/>
+                  </t>
+                  <t t-if="o.state != 'done'">
+                    <p t-field="o.scheduled_date" t-options="{'widget': 'date'}"/>
+                  </t>
+                </div>
+                <div class="col-auto justify-content-end" t-if="o.sudo().sale_id.client_order_ref">
+                  <strong>Customer Reference:</strong>
+                  <p t-field="o.sudo().sale_id.client_order_ref"/>
+                </div>
+              </div>
+              <!-- <table class="table table-sm" t-if="o.state!='done'" name="stock_move_table">
+                        <thead>
+                            <tr>
+                                <th name="th_sm_product"><strong>Product</strong></th>
+                                <th name="th_sm_ordered"><strong>Ordered</strong></th>
+                                <th name="th_sm_quantity"><strong>Delivered</strong></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-set="lines" t-value="o.move_ids.filtered(lambda x: x.product_uom_qty)"/>
+                            <tr t-foreach="lines" t-as="move">
+                                <td>
+                                    <span t-field="move.product_id"/>
+                                    <p t-if="move.description_picking != move.product_id.name and move.description_picking != move.product_id.display_name">
+                                        <span t-field="move.description_picking"/>
+                                    </p>
+                                </td>
+                                <td>
+                                    <span t-field="move.product_uom_qty"/>
+                                    <span t-field="move.product_uom"/>
+                                </td>
+                                <td>
+                                    <span t-field="move.quantity_done"/>
+                                    <span t-field="move.product_uom"/>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table> -->
+              <table class="table table-sm" t-if="o.move_line_ids and o.state=='done' or o.state!='done'" name="stock_move_line_table">
+                <t t-set="has_serial_number" t-value="False"/>
+                <t t-set="has_serial_number" t-value="o.move_line_ids.mapped('lot_id')" groups="stock.group_lot_on_delivery_slip"/>
+                <thead>
+                  <tr>
+                    <th name="th_sml_product">
+                      <strong style="color: #29449a;">Description</strong>
+                    </th>
+                    <t name="lot_serial" t-if="has_serial_number">
+                      <th style="color: #29449a;">
+                        Lot Number
+                      </th>
+                    </t>
+                    <t t-set="has_expiry_date" t-value="False"/>
+                    <t t-set="has_expiry_date" t-value="o.move_line_ids.filtered(lambda ml: ml.lot_id.expiration_date)" groups="product_expiry.group_expiry_date_on_delivery_slip"/>
+                    <t name="expiry_date" t-if="has_expiry_date">
+                      <th class="text-center" style="color: #29449a;">EXP. DATE</th>
+                    </t>
+                    <th name="th_sml_qty_ordered" class="text-center" t-if="not has_serial_number">
+                      <strong style="color: #29449a;">Ordered</strong>
+                    </th>
+                    <th name="th_sml_quantity" class="text-center">
+                      <strong style="color: #29449a;">Delivered</strong>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- This part gets complicated with different use cases (additional use cases in extensions of this report):
+                                1. If serial numbers are used and set to print on delivery slip => print lines as is, otherwise group them by overlapping
+                                    product + description + uom combinations
+                                2. If any packages are assigned => split products up by package (or non-package) and then apply use case 1 -->
+                  <!-- If has destination packages => create sections of corresponding products -->
+                  <t t-if="o.has_packages" name="has_packages">
+                    <t t-set="packages" t-value="o.move_line_ids.mapped('result_package_id')"/>
+                    <t t-foreach="packages" t-as="package">
+                      <t t-call="albanna_reports_customization.stock_report_delivery_package_section_line_copy_1"/>
+                      <t t-set="package_move_lines" t-value="o.move_line_ids.filtered(lambda l: l.result_package_id == package)"/>
+                      <!-- If printing lots/serial numbers => keep products in original lines -->
+                      <t t-if="has_serial_number">
+                        <tr t-foreach="package_move_lines" t-as="move_line">
+                          <t t-call="albanna_reports_customization.stock_report_delivery_has_serial_move_line_copy_1"/>
+                        </tr>
+                      </t>
+                      <!-- If not printing lots/serial numbers => merge lines with same product+description+uom -->
+                      <t t-else="">
+                        <t t-set="aggregated_lines" t-value="package_move_lines._get_aggregated_product_quantities(strict=True)"/>
+                        <t t-call="albanna_reports_customization.stock_report_delivery_aggregated_move_lines_copy_1"/>
+                      </t>
+                    </t>
+                    <!-- Make sure we do another section for package-less products if they exist -->
+                    <t t-set="move_lines" t-value="o.move_line_ids.filtered(lambda l: not l.result_package_id)"/>
+                    <t t-set="aggregated_lines" t-value="o.move_line_ids._get_aggregated_product_quantities(except_package=True)"/>
+                    <t t-if="move_lines or aggregated_lines" name="no_package_move_lines">
+                      <t t-call="stock.stock_report_delivery_no_package_section_line_copy_1" name="no_package_section"/>
+                      <t t-if="has_serial_number">
+                        <tr t-foreach="move_lines" t-as="move_line">
+                          <t t-call="albanna_reports_customization.stock_report_delivery_has_serial_move_line_copy_1"/>
+                        </tr>
+                      </t>
+                      <t t-elif="aggregated_lines">
+                        <t t-call="albanna_reports_customization.stock_report_delivery_aggregated_move_lines_copy_1"/>
+                      </t>
+                    </t>
+                  </t>
+                  <!-- No destination packages -->
+                  <t t-else="">
+                    <!-- If printing lots/serial numbers => keep products in original lines -->
+                    <t t-if="has_serial_number">
+                      <tr t-foreach="o.move_line_ids" t-as="move_line">
+                        <t t-call="albanna_reports_customization.stock_report_delivery_has_serial_move_line_copy_1"/>
+                      </tr>
+                    </t>
+                    <!-- If not printing lots/serial numbers => merge lines with same product -->
+                    <t t-else="" name="aggregated_move_lines">
+                      <t t-set="aggregated_lines" t-value="o.move_line_ids._get_aggregated_product_quantities()"/>
+                      <t t-call="albanna_reports_customization.stock_report_delivery_aggregated_move_lines_copy_1"/>
+                    </t>
+                  </t>
+                </tbody>
+              </table>
+              <t t-set="backorders" t-value="o.backorder_ids.filtered(lambda x: x.state not in ('done', 'cancel'))"/>
+              <t t-if="o.backorder_ids and backorders">
+                <p class="mt-5">
+                  <span>Remaining quantities not yet delivered:</span>
+                </p>
+                <table class="table table-sm" name="stock_backorder_table" style="table-layout: fixed;">
+                  <thead>
+                    <tr>
+                      <th name="th_sb_product">
+                        <strong>Product</strong>
+                      </th>
+                      <th/>
+                      <th name="th_sb_quantity" class="text-center">
+                        <strong>Quantity</strong>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <t t-foreach="backorders" t-as="backorder">
+                      <t t-set="bo_lines" t-value="backorder.move_ids.filtered(lambda x: x.product_uom_qty)"/>
+                      <tr t-foreach="bo_lines" t-as="bo_line">
+                        <td class="w-auto">
+                          <span t-field="bo_line.product_id"/>
+                          <p t-if="bo_line.description_picking != bo_line.product_id.name and bo_line.description_picking != bo_line.product_id.display_name">
+                            <span t-field="bo_line.description_picking"/>
+                          </p>
+                        </td>
+                        <td/>
+                        <td class="text-center w-auto">
+                          <span t-field="bo_line.product_uom_qty"/>
+                          <span t-field="bo_line.product_uom"/>
+                        </td>
+                      </tr>
+                    </t>
+                  </tbody>
+                </table>
+              </t>
+              <div t-if="o.signature" class="mt32 ml64 mr4" name="signature">
+                <div class="offset-8">
+                  <strong>Signature</strong>
+                </div>
+                <div class="offset-8">
+                  <img t-att-src="image_data_uri(o.signature)" style="max-height: 4cm; max-width: 8cm;"/>
+                </div>
+                <div class="offset-8 text-center">
+                  <p t-field="o.partner_id.name"/>
+                </div>
+              </div>
+            <div t-if="o and o._name == 'stock.picking'">
+                <table style="border:1px solid #28459f; width:100%; align:center; text-align:center">
+                  <thead style="background:lightgrey">
+                    <tr style="border:1px solid; height:auto; font-size:10.5px; valign:center">
+                      <th style="border:1px solid;width:39%">
+                        <span style="text-align:center; color:#28459f; font-family:adobe arabic">أستلمت البضاعة
+                          المبينة أعلاه دون نقص أو تلف
+                        </span>
+                        <br/>
+                        <span style="text-align:center; color:#28459f; font-family:adobe arabic">وسيتم التسديد خلال
+                          المدة المقررة في
+                        </span>
+                        <br/>
+                        <span style="text-align:center; color:#28459f; font-family:adobe arabic">شروط الدفع المثبته
+                          في الفاتورة
+                        </span>
+                        <br/>
+                        <span style="color:#28459f">Materials received in good condition, payment will be done as
+                          stated in invoice
+                        </span>
+                      </th>
+                      <th style="width:1%; background:white">
+                        <span/>
+                      </th>
+                      <th style="width:25%; border:1px solid;vertical-align: middle;text-transform:uppercase;">
+                        <span style="color: #29449a; text-align:center; direction:rtl; font-family:adobe arabic">تم الموافقة من قِبل
+                          مدير المخزن
+                        </span>
+                        <br/>
+                        <span style="color: #29449a;">Approved by Warehouse Manager</span>
+                      </th>
+                      <th style="width:25%; border:1px solid;vertical-align: middle;text-transform:uppercase;">
+                        <span style="color: #29449a; text-align:center; direction:rtl; font-family:adobe arabic">تم التحقيق من قبل
+                          مدير قسم الجودة
+                        </span>
+                        <br/>
+                        <span style="color: #29449a;">Checked by quality assurance manager</span>
+                      </th>
+                      <!--                      <th style="width:20%; border:1px solid">-->
+                      <!--                        <span style="text-align:center; direction:rtl; font-family:adobe arabic">تم التجهيز من قِبل</span>-->
+                      <!--                        <br/>-->
+                      <!--                        <span>(Doc. Prepared by)</span>-->
+                      <!--                      </th>-->
+                      <th style="width:10%;border:1px solid">
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td style="border:1px solid"/>
+                      <td style="width:10px; background:white">
+                        <span/>
+                      </td>
+                      <td style="border:1px solid;vertical-align: middle;">
+                        <span t-field="o.validated_user_id" style="font-size: larger;"/>
+                        <!-- <span style="text-align:center; direction:rtl; font-family:adobe arabic">
+                          <b>محمد عبدالستارعلي</b>
+                        </span>
+                        <br/> -->
+                      </td>
+                      <td style="border:1px solid;vertical-align: middle;">
+                        <span t-if="o.quality_assurance_user_id" t-field="o.quality_assurance_user_id" style="font-size: larger;"/>
+                        <!-- <span style="text-align:center; direction:rtl; font-family:adobe arabic">
+                          <b>احمد سلام عبدالامير</b>
+                        </span> -->
+                      </td>
+                      <!--                      <td style="border:1px solid">-->
+                      <!--                        <span style="text-align:center; direction:rtl; font-family:adobe arabic">-->
+                      <!--                          <b>احمد عبدالرحمن أسماعيل</b>-->
+                      <!--                        </span>-->
+                      <!--                      </td>-->
+                      <td style="border:1px solid;vertical-align: middle;">
+                        <span style="text-align:center; direction:rtl; font-family:adobe arabic">
+                          <b>الآسم</b>
+                        </span>
+                        <br/>
+                        <span>
+                          <b>Name</b>
+                        </span>
+                      </td>
+                    </tr>
+                    <tr style="height:70px;">
+                      <td/>
+                      <td style="border:1px solid;vertical-align: middle;"/>
+                      <td style="border:1px solid;vertical-align: middle;">
+                        <!--                          <t t-out="o.user_id.signature or ''"/>-->
+                        <img t-if="o.validated_user_id.sign_signature"
+                             t-att-src="image_data_uri(o.validated_user_id.sign_signature)"
+                             style="max-height: 3cm; max-width: 6cm;"/>
+                      </td>
+                      <td style="border:1px solid;vertical-align: middle;">
+                        <!--                          <t t-out="o.user_id.signature or ''"/>-->
+                        <img t-if="o.quality_assurance_user_id.sign_signature"
+                             t-att-src="image_data_uri(o.quality_assurance_user_id.sign_signature)"
+                             style="max-height: 3cm; max-width: 6cm;"/>
+                      </td>
+                      <!--                      <td style="border:1px solid">-->
+
+                      <!--                            </td>-->
+                      <td style="border:1px solid;vertical-align: middle;">
+                        <span style="text-align:center; direction:rtl;  font-family:adobe arabic">
+                          <b>االتوقيع</b>
+                        </span>
+                        <br/>
+                        <span>
+                          <b>Signature</b>
+                        </span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+            </div>
+            </div>
+
+<!--            <t t-if="o.company_id.name == 'Albanna Scientific Bureau'">-->
+<!--              <div style="position:relative; top:50px; page-break-inside:avoid">-->
+<!--                <table style="border:1px solid #28459f; width:100%; align:center; text-align:center">-->
+<!--                  <thead style="background:lightgrey">-->
+<!--                    <tr style="border:1px solid; height:auto; font-size:10.5px; valign:center">-->
+<!--                      <th style="border:1px solid;width:39%">-->
+<!--                        <span style="text-align:center; color:#28459f; font-family:adobe arabic">أستلمت البضاعة المبينة أعلاه دون نقص أو تلف </span>-->
+<!--                        <br/>-->
+<!--                        <span style="text-align:center; color:#28459f; font-family:adobe arabic">وسيتم التسديد خلال المدة المقررة في</span>-->
+<!--                        <br/>-->
+<!--                        <span style="text-align:center; color:#28459f; font-family:adobe arabic"> شروط الدفع المثبته في الفاتورة</span>-->
+<!--                        <br/>-->
+<!--                        <span style="color:#28459f">Materials received in good condition, payment will be done as stated in invoice</span>-->
+<!--                      </th>-->
+<!--                      <th style="width:1%; background:white">-->
+<!--                        <span/>-->
+<!--                      </th>-->
+<!--                      <th style="width:25%; border:1px solid;vertical-align: middle;text-transform:uppercase;">-->
+<!--                        <span style="text-align:center; direction:rtl; font-family:adobe arabic"> تم الموافقة من قِبل مدير المخزن</span>-->
+<!--                        <br/>-->
+<!--                        <span>Approved by Warehouse Manager</span>-->
+<!--                      </th>-->
+<!--                      <th style="width:25%; border:1px solid;vertical-align: middle;text-transform:uppercase;">-->
+<!--                        <span style="text-align:center; direction:rtl; font-family:adobe arabic">تم التحقيق من قبل مدير قسم الجودة</span>-->
+<!--                        <br/>-->
+<!--                        <span>Checked by quality assurance manager</span>-->
+<!--                      </th>-->
+<!--&lt;!&ndash;                      <th style="width:20%; border:1px solid">&ndash;&gt;-->
+<!--&lt;!&ndash;                        <span style="text-align:center; direction:rtl; font-family:adobe arabic">تم التجهيز من قِبل</span>&ndash;&gt;-->
+<!--&lt;!&ndash;                        <br/>&ndash;&gt;-->
+<!--&lt;!&ndash;                        <span>(Doc. Prepared by)</span>&ndash;&gt;-->
+<!--&lt;!&ndash;                      </th>&ndash;&gt;-->
+<!--                      <th style="width:10%;border:1px solid">-->
+<!--                      </th>-->
+<!--                    </tr>-->
+<!--                  </thead>-->
+<!--                  <tbody>-->
+<!--                    <tr style="height:70px">-->
+<!--                      <td style="border:1px solid"/>-->
+<!--                      <td style="width:10px; background:white">-->
+<!--                        <span/>-->
+<!--                      </td>-->
+<!--                      <td style="border:1px solid;vertical-align: middle;">-->
+<!--                        <span t-field="o.validated_user_id"/>-->
+<!--                        &lt;!&ndash; <span style="text-align:center; direction:rtl; font-family:adobe arabic">-->
+<!--                          <b>محمد عبدالستارعلي</b>-->
+<!--                        </span>-->
+<!--                        <br/> &ndash;&gt;-->
+<!--                      </td>-->
+<!--                      <td style="border:1px solid;vertical-align: middle;">-->
+<!--                        <span t-field="o.quality_assurance_user_id"/>-->
+<!--                        &lt;!&ndash; <span style="text-align:center; direction:rtl; font-family:adobe arabic">-->
+<!--                          <b>احمد سلام عبدالامير</b>-->
+<!--                        </span> &ndash;&gt;-->
+<!--                      </td>-->
+<!--&lt;!&ndash;                      <td style="border:1px solid">&ndash;&gt;-->
+<!--&lt;!&ndash;                        <span style="text-align:center; direction:rtl; font-family:adobe arabic">&ndash;&gt;-->
+<!--&lt;!&ndash;                          <b>احمد عبدالرحمن أسماعيل</b>&ndash;&gt;-->
+<!--&lt;!&ndash;                        </span>&ndash;&gt;-->
+<!--&lt;!&ndash;                      </td>&ndash;&gt;-->
+<!--                      <td style="border:1px solid;vertical-align: middle;">-->
+<!--                        <span style="text-align:center; direction:rtl; font-family:adobe arabic">-->
+<!--                          <b>الآسم</b>-->
+<!--                        </span>-->
+<!--                        <br/>-->
+<!--                        <span>-->
+<!--                          <b>Name</b>-->
+<!--                        </span>-->
+<!--                      </td>-->
+<!--                    </tr>-->
+<!--                    <tr style="height:70px">-->
+<!--                      <td/>-->
+<!--                      <td style="border:1px solid;vertical-align: middle;"/>-->
+<!--                      <td style="border:1px solid;vertical-align: middle;">-->
+<!--&lt;!&ndash;                          <t t-out="o.user_id.signature or ''"/>&ndash;&gt;-->
+<!--                          <img t-if="o.validated_user_id.sign_signature" t-att-src="image_data_uri(o.validated_user_id.sign_signature)" style="max-height: 2cm; max-width: 4cm;"/>-->
+<!--                      </td>-->
+<!--                      <td style="border:1px solid;vertical-align: middle;">-->
+<!--&lt;!&ndash;                          <t t-out="o.user_id.signature or ''"/>&ndash;&gt;-->
+<!--                          <img t-if="o.quality_assurance_user_id.sign_signature" t-att-src="image_data_uri(o.quality_assurance_user_id.sign_signature)" style="max-height: 2cm; max-width: 4cm;"/>-->
+<!--                      </td>-->
+<!--&lt;!&ndash;                      <td style="border:1px solid">&ndash;&gt;-->
+
+<!--&lt;!&ndash;                            </td>&ndash;&gt;-->
+<!--                      <td style="border:1px solid;vertical-align: middle;">-->
+<!--                        <span style="text-align:center; direction:rtl;  font-family:adobe arabic">-->
+<!--                          <b>االتوقيع</b>-->
+<!--                        </span>-->
+<!--                        <br/>-->
+<!--                        <span>-->
+<!--                          <b>Signature</b>-->
+<!--                        </span>-->
+<!--                      </td>-->
+<!--                    </tr>-->
+<!--                  </tbody>-->
+<!--                </table>-->
+<!--              </div>-->
+<!--            </t>-->
+<!--            <div name="pager">-->
+<!--                Page: <span class="page"/> / <span class="topage"/>-->
+<!--            </div>-->
+          </t>
+        </t>
+    </template>
+
+
+    <template id="deliveryslip_albanna_document">
+        <t t-foreach="docs" t-as="o">
+          <t t-set="cids" t-value="request.httprequest.cookies.get('cids')"/>
+          <t t-set="active_company_int_list" t-value="[]"/>
+          <t t-if="cids">
+              <t t-set="active_company_str_list" t-value="cids.split(',')"/>
+              <t t-foreach="active_company_str_list" t-as="active_company_str">
+                  <t t-set="active_company_int_list" t-value="active_company_int_list + [int(active_company_str)]"/>
+              </t>
+          </t>
+          <t t-if="len(active_company_int_list) > 0">
+              <t t-set="company" t-value="request.env['res.company'].sudo().browse(active_company_int_list[0])"/>
+          </t>
+          <t t-call="albanna_reports_customization.deliveryslip_albanna_template" t-lang="o.partner_id.lang or o.env.lang"/>
+        </t>
+    </template>
+
+</odoo>
