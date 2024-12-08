@@ -1,0 +1,29 @@
+.btn-blue {
+    background-color: blue;
+    color: white;
+}
+
+.btn-orange {
+    background-color: orange;
+    color: white;
+}
+
+.btn-green {
+    background-color: green;
+    color: white;
+}
+
+.btn-red {
+    background-color: red;
+    color: white;
+}
+
+.btn-gray {
+    background-color: gray;
+    color: white;
+}
+
+/* Optional: You can also add styles for the "active" state */
+.active {
+    border: 2px solid #007bff; /* Example for active button */
+}
